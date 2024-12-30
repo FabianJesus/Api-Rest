@@ -1,0 +1,2 @@
+You need to edit phpunit.xml.dist and write the generated token in the login in and put it in SECURITY_TOKEN.
+You also need to create the "api_test" database, change in .env the link to the database and migrate the tables.

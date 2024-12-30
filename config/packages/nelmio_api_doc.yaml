@@ -1,0 +1,262 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: My Api
+            description: Documentation about my API rest for company 480. Keep in mind that it is necessary to have a xamp or server in order to run the migrations or sql. 
+            version: 1.0.0
+        paths:
+            /api/wine:
+                get:
+                    description: 'It is used to get wines with the measurements'
+                    parameters:
+                        token:
+                            name: 'token'
+                            in: header
+                            description: 'A customized header needed for this request'
+                            required: true
+                            schema:
+                                type: string
+                                example: 'Your token'
+                    responses:
+                        '200':
+                            description: 'OK'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_wine'
+                        '401':
+                            description: 'KO'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_request_denied'
+                post:
+                    description: 'It is used to add a new wine'
+                    parameters:
+                        token:
+                            name: 'token'
+                            in: header
+                            description: 'A customized header needed for this request'
+                            required: true
+                            schema:
+                                type: string
+                                example: 'Your token'
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/wine_post'
+                    responses:
+                        '201':
+                            description: 'OK'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_ok'
+                        '401':
+                            description: 'KO'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_request_denied'
+                        '500':
+                            description: 'KO'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_error'
+
+            /api/sensor:
+                get:
+                    description: 'It is used to get the sensors filtered by the field "name"'
+                    parameters:
+                        token:
+                            name: 'token'
+                            in: header
+                            description: 'A customized header needed for this request'
+                            required: true
+                            schema:
+                                type: string
+                                example: 'Your token'
+                    responses:
+                        '200':
+                            description: 'OK'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_sensor'
+                        '401':
+                            description: 'KO'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_request_denied'
+                post:
+                    description: 'It is used to add a new sensor'
+                    parameters:
+                        token:
+                            name: 'token'
+                            in: header
+                            description: 'A customized header needed for this request'
+                            required: true
+                            schema:
+                                type: string
+                                example: 'Your token'
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/sensor_post'
+                    responses:
+                        '201':
+                            description: 'OK'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_ok'
+                        '401':
+                            description: 'KO'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_request_denied'
+                        '500':
+                            description: 'KO'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_error'
+            
+            /api/measurement:
+                post:
+                    description: 'It is used to add a new sampling'
+                    parameters:
+                        token:
+                            name: 'token'
+                            in: header
+                            description: 'A customized header needed for this request'
+                            required: true
+                            schema:
+                                type: string
+                                example: 'Your token'
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/measurement_post'
+                    responses:
+                        '201':
+                            description: 'OK'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_ok'
+                        '401':
+                            description: 'KO'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_request_denied'
+                        '500':
+                            description: 'KO'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_error'
+                                    
+
+            /api/login:
+                post:
+                    description: 'It is used to get the token to access the rest of the features. Please, bear in mind that before using it you must manually add a new user or import the SQL file located in the root folder or ejecute the comand php bin/console doctrine:migrations:migrate by generate new user'
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/login'
+                    responses:
+                        "201":
+                            description: 'OK'
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/responses_login'
+
+        components:
+            schemas:
+                login:
+                    type: object
+                    properties:
+                        email: { type: string, example: 'pruebas@api.com'}
+                        password: { type: string, example: 'mypassword123'}
+                wine_post:
+                    type: object
+                    properties:
+                        name: { type: string, example: 'Ribiera'}
+                        year: { type: integer, example: 2018}
+                responses_sensor:
+                    type: object
+                    properties:
+                        id: { type: integer, example: 1}
+                        name: { type: string, example: 'Pepe'}
+                measurement_post:
+                    type: object
+                    properties:
+                        year: { type: integer, example: 2018}
+                        sensor: { type: integer, example: 2}
+                        wine: { type: integer, example: 2}
+                        color: { type: string, example: 'Rosado'}
+                        temperature: { type: string, example: '9°C'}
+                        graduation: { type: string, example: '15°'}
+                        ph: { type: string, example: '100'}
+                sensor_post:
+                    type: object
+                    properties:
+                        name: { type: string, example: 'Lola'}
+                responses_wine:
+                    type: object
+                    properties:
+                        id: { type: integer, example: 1}
+                        name: { type: string, example: 'Rioja'}
+                        year: { type: integer, example: 2024}
+                        measurements: 
+                            type: "array" 
+                            items: 
+                                type: "object" 
+                                properties: 
+                                    id: { type: integer, example: 1}
+                                    year: { type: integer, example: '2024'}
+                                    sensor:
+                                        type: array
+                                        items: 
+                                            type: "object" 
+                                            properties:
+                                                id: { type: integer, example: '1'}
+                                                name: { type: string, example: 'Antonio'}
+                                    color: { type: string, example: 'red'}
+                                    temperature: { type: string, example: '9°C'}
+                                    graduation: { type: string, example: '15°'}
+                                    ph: { type: string, example: '100'}
+                responses_login:
+                    type: object
+                    properties:
+                        token: { type: string, example: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJl...'}
+                responses_request_denied:
+                    type: object
+                    properties:
+                        request_denied: { type: string, example: 'Unauthorized'}
+                responses_error:
+                    type: object
+                    properties:
+                        error: { type: string, example: 'Depends on the type of error'}
+                responses_ok:
+                    type: object
+                    properties:
+                        message: { type: string, example: 'It has been inserted correctly'}
+
+    areas:
+        path_patterns:
+            - ^/api(?!/doc$)
