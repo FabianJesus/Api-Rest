@@ -19,6 +19,6 @@ class MeasurementController extends AbstractController
     #[Route('/api/measurement', methods: 'POST')]
     public function postMeasurement(Request $request)
     {
-        return $this->measurementService->getMeasurementInfo($request);
+        return $this->measurementService->postMeasurement($request);
     }
 }

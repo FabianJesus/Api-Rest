@@ -23,7 +23,7 @@ class MeasurementService
         $this->entityManager = $entityManager;
     }
 
-    public function getMeasurementInfo($request) {
+    public function postMeasurement($request) {
         $check = $this->checkUserService->checkUser($request);
         if($check[0]){
             return $check[1];

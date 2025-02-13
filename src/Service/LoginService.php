@@ -21,7 +21,7 @@ class LoginService
         $this->usuarioReposity = $usuarioReposity;
     }
 
-    public function loginCheck($request)
+    public function login($request)
     {
         $data = json_decode($request->getContent(), true);
         $email = $data['email'] ?? '';

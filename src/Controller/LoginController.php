@@ -20,7 +20,7 @@ class LoginController extends AbstractController
     #[Route('/api/login', methods:"POST")]
     public function login(Request $request)
     {
-        return $this->loginService->loginCheck($request);
+        return $this->loginService->login($request);
     }
 
 }
